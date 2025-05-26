@@ -10,7 +10,7 @@ type Props = {
 
 export default function LoginForm({ setIndex }: Props) {
   const router = useRouter();
-  const { setUser ,setLoadingAnimation } = useAuth();
+  const { setUser, setLoadingAnimation } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,11 +36,15 @@ export default function LoginForm({ setIndex }: Props) {
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.role);
-      setUser(data); 
+      setUser(data);
 
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Something went wrong');
+      }
     } finally {
       setLoadingAnimation(false);
     }

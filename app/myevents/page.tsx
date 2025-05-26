@@ -69,7 +69,7 @@ const MyEventsPage = () => {
                 date={event.date}
                 location={event.location}
                 customFields={event.customFields}
-                currentUserRole={role as any}
+                currentUserRole={role as 'admin' | 'owner' | 'staff' | 'guest' }
                 isOwner={true}
                 ownerId={event.ownerId}
                 onDelete={() => {

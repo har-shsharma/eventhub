@@ -73,7 +73,6 @@ const EventForm: React.FC<EventFormProps> = ({ initialData, onSave }) => {
           const errorData = await res.json();
           throw new Error(errorData.error || 'Failed to update event');
         }
-        const updatedEvent = await res.json();
         toast.success('Event updated successfully!', {
           duration: 2000,
           style: {
@@ -96,7 +95,6 @@ const EventForm: React.FC<EventFormProps> = ({ initialData, onSave }) => {
           throw new Error(errorData.error || 'Failed to create event');
         }
 
-        const newEvent = await res.json();
         toast.success('Event created successfully!', {
           duration: 2000,
           style: {

@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 
 interface RSVPFormProps {
   eventId: string;
-  isOwner : boolean
+  isOwner: boolean
 }
 
 interface RSVP {
@@ -13,7 +13,7 @@ interface RSVP {
   submittedAt: string;
 }
 
-const RSVPForm: React.FC<RSVPFormProps> = ({ eventId ,isOwner}) => {
+const RSVPForm: React.FC<RSVPFormProps> = ({ eventId, isOwner }) => {
   const [rsvps, setRsvps] = useState<RSVP[]>([]);
   const [userRole, setUserRole] = useState<string>('guest');
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ eventId ,isOwner}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
-  const isPrivileged = ['admin' , 'staff'].includes(userRole);
+  const isPrivileged = ['admin', 'staff'].includes(userRole);
 
   useEffect(() => {
     const role = localStorage.getItem('role') || 'guest';
@@ -48,8 +48,12 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ eventId ,isOwner}) => {
       } else {
         setError(data.error || 'Failed to load RSVPs');
       }
-    } catch (err) {
-      setError('Server error while fetching RSVPs.');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Something went wrong');
+      }
     } finally {
       setLoading(false);
     }
@@ -90,8 +94,12 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ eventId ,isOwner}) => {
           color: '#fff',
         },
       });
-    } catch (err) {
-      setError('Server error. Please try again later.');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Something went wrong');
+      }
     } finally {
       setLoading(false);
     }
@@ -121,15 +129,15 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ eventId ,isOwner}) => {
     return (
       <div className="bg-white p-4 rounded shadow">
         <div className="flex justify-between">
-        <h3 className="font-semibold text-lg mb-2">RSVPs Received</h3>
-        {rsvps.length > 0 && (
-          <button
-            onClick={() => downloadCSV(rsvps)}
-            className="px-2 py-2 bg-gray-600 text-white text-sm rounded hover:bg-black"
-          >
-            Download CSV
-          </button>
-        )}
+          <h3 className="font-semibold text-lg mb-2">RSVPs Received</h3>
+          {rsvps.length > 0 && (
+            <button
+              onClick={() => downloadCSV(rsvps)}
+              className="px-2 py-2 bg-gray-600 text-white text-sm rounded hover:bg-black"
+            >
+              Download CSV
+            </button>
+          )}
         </div>
         {loading && <p>Loading RSVPs...</p>}
         {error && <p className="text-red-500">{error}</p>}

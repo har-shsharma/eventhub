@@ -17,7 +17,7 @@ interface EventCardProps {
   date: string | Date;
   location?: string;
   customFields?: CustomField[];
-  currentUserRole?: 'admin' | 'owner' | 'staff' | 'guest';
+  currentUserRole?: 'admin' | 'owner' | 'staff' | 'guest' ;
   isOwner?: boolean;
   ownerId: string
   onDelete?: () => void;

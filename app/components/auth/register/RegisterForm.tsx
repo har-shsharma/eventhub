@@ -10,7 +10,7 @@ type Props = {
 
 export default function RegisterForm({ setIndex }: Props) {
   const router = useRouter();
-  const { setUser ,setLoadingAnimation} = useAuth();
+  const { setUser, setLoadingAnimation } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,8 +36,12 @@ export default function RegisterForm({ setIndex }: Props) {
       localStorage.setItem('role', data.role);
       setUser(data);
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Something went wrong');
+      }
     } finally {
       setLoadingAnimation(false);
     }

@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const decoded: User = JSON.parse(atob(token.split('.')[1]));
         setUser(decoded);
       } catch (err) {
+        console.log(err);
         setUser(null);
       }
     }
