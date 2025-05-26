@@ -44,15 +44,16 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const user = await getUserFromRequest(req);
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     await connectDB();
 
-    const event = await Event.findById(params.id);
+    const event = await Event.findById(id);
     if (!event) return NextResponse.json({ error: 'Event not found' }, { status: 404 });
 
     if (
@@ -90,15 +91,16 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const user = await getUserFromRequest(req);
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     await connectDB();
 
-    const event = await Event.findById(params.id);
+    const event = await Event.findById(id);
     if (!event) return NextResponse.json({ error: 'Event not found' }, { status: 404 });
 
     if (
