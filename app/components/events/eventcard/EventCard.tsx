@@ -47,7 +47,7 @@ const EventCard: React.FC<EventCardProps> = ({
     day: 'numeric',
   });
 
-  const canEdit = currentUserRole === 'admin' || isOwner  || 'staff';
+  const canEdit = ( currentUserRole === 'admin' || 'staff' ) || isOwner  ;
   const canDelete = currentUserRole === 'admin' || isOwner;
 
   if (isEditing) {
