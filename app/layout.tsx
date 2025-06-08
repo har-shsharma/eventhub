@@ -39,7 +39,8 @@ export default function RootLayout({
       >
         <Header/>
         <Toaster position="top-center" reverseOrder={false} />
-        <div className="min-h-[85vh]">
+        <div className="bg-[url('/images/dashboard.jpeg')] bg-contain bg-no-repeat bg-center md:hidden block fixed top-0 left-0 w-full h-full z-[-1]"></div>
+        <div className="min-h-[85vh] md:bg-[url('/images/dashboard.jpeg')] bg-contain !bg-fixed bg-no-repeat bg-right">
         {children}
         </div>
         <Footer/>

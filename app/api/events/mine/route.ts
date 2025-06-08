@@ -15,11 +15,24 @@ export async function GET(req: Request) {
   try {
     await connectDB();
 
-    const events = await Event.find({ ownerId: user.userId }).sort({ date: -1 });
+    const { searchParams } = new URL(req.url);
+    const page = parseInt(searchParams.get('page') || '1', 10);
+    const limit = parseInt(searchParams.get('limit') || '5', 10);
+    const status = searchParams.get('status');
+    const skip = (page - 1) * limit;
+    const query: any = { ownerId: user.userId };
+    if (status) query.status = status;
 
-    return NextResponse.json({ events }, { status: 200 });
+    const total = await Event.countDocuments(query);
+    const events = await Event.find(query)
+      .sort({ date: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    return NextResponse.json({ events, total }, { status: 200 });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
+

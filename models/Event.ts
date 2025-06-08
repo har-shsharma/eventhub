@@ -8,6 +8,11 @@ const eventSchema = new mongoose.Schema(
     location: { type: String },
     ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     customFields: [{ label: String, value: String }],
+    status: {
+      type: String,
+      enum: ['pending', 'approved', 'rejected'],
+      default: 'pending',
+    },
   },
   { timestamps: true }
 );

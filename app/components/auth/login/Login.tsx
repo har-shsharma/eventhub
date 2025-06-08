@@ -59,10 +59,10 @@ export default function LoginForm({ setIndex }: Props) {
   };
 
   return (
-    <div className=" w-[100vw] right-0 md:w-[50vw] h-[100vh] flex items-center justify-center bg-white">
+    <div className=" w-[100vw] right-0 md:w-[50vw] h-[100vh] flex items-center justify-center">
       <form
         onSubmit={handleLogin}
-        className="bg-white bg-opacity-20 w-[80%] mx-auto px-8 py-12 border border-white border-opacity-30  rounded-[12px] shadow-lg  space-y-8 "      >
+        className="bg-white bg-[white] w-[80%] mx-auto px-8 py-12 border border-white border-opacity-30  rounded-[12px] shadow-xl hover:shadow-2xl transition-all duration-300 space-y-8 ">
         <h2 className="text-2xl font-semibold text-center text-gray-800">Login</h2>
 
         <div className="space-y-4">

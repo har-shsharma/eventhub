@@ -28,8 +28,8 @@ function Auth() {
 
   return (
     <>
-      <div className="w-[100vw] h-[100vh] overflow-hidden fixed top-[0] right-[0] z-[40]">
-        <div ref={containerRef} className={`w-[200vw] md:w-[100vw] h-[100vh] relative left-0 md:left-[50%] flex `}>
+      <div className="w-[100vw] h-[100vh] overflow-hidden fixed top-[0] right-[0] z-[40] bg-[white]">
+        <div ref={containerRef} className={`w-[200vw] md:w-[100vw] h-[100vh] relative left-0 md:left-[50%] flex  bg-[url('/images/loginscreen.jpeg')] bg-contain bg-no-repeat bg-center`}>
           <LoginForm setIndex={setIndex} />
           <RegisterForm setIndex={setIndex} />
         </div>

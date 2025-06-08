@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
-import EventForm from '../eventform/EventForm'; 
-import { useRouter } from 'next/navigation';
+import EventForm from '../eventform/EventForm';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface CustomField {
   label: string;
@@ -17,11 +17,12 @@ interface EventCardProps {
   date: string | Date;
   location?: string;
   customFields?: CustomField[];
-  currentUserRole?: 'admin' | 'owner' | 'staff' | 'guest' ;
+  currentUserRole?: 'admin' | 'owner' | 'staff' | 'guest';
   isOwner?: boolean;
   ownerId: string
   onDelete?: () => void;
-  onUpdate?: () => void; 
+  onUpdate?: () => void;
+  status?: string;
 }
 
 const EventCard: React.FC<EventCardProps> = ({
@@ -35,7 +36,8 @@ const EventCard: React.FC<EventCardProps> = ({
   isOwner = false,
   onDelete,
   onUpdate,
-  ownerId
+  ownerId,
+  status
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
@@ -47,7 +49,8 @@ const EventCard: React.FC<EventCardProps> = ({
     day: 'numeric',
   });
 
-  const canEdit = ( currentUserRole === 'admin' || currentUserRole === 'staff' ) || isOwner  ;
+  const pathname = usePathname();
+  const canEdit = pathname !== '/approve' && (currentUserRole === 'admin' || isOwner || ['staff'].includes(currentUserRole));
   const canDelete = currentUserRole === 'admin' || isOwner;
 
   if (isEditing) {
@@ -69,28 +72,28 @@ const EventCard: React.FC<EventCardProps> = ({
             ownerId,
             id
           }}
-          onSave={() => {setIsEditing(false); if (onUpdate) onUpdate();}}
+          onSave={() => { setIsEditing(false); if (onUpdate) onUpdate(); }}
         />
       </div>
     );
   }
 
   const handleCardClick = () => {
-  if (!isEditing && id) {
-    router.push(`/events/${id}`);
-  }
-};
+    if (!isEditing && id) {
+      router.push(`/events/${id}`);
+    }
+  };
 
   return (
-    <div className="event-card border rounded-md p-4 shadow-md bg-white relative hover:bg-gray-100 cursor-pointer"  onClick={handleCardClick}>
+    <div className="event-card backdrop-blur-sm bg-white/40 border rounded-md p-4 shadow-md bg-white relative transition transform hover:bg-gray-100 hover:md:bg-white/40 hover:-translate-y-1 hover:shadow-xl duration-300 cursor-pointer will-change-transform" onClick={handleCardClick} >
       {canEdit && (
-        <div className="absolute top-4 right-4 flex space-x-4">
-          <button onClick={(e) => {setIsEditing(true); e.stopPropagation(); }} className="text-gray-600 hover:text-black">
-            <Pencil size={18} />
+        <div className="absolute top-4 right-4 space-x-4">
+          <button onClick={(e) => { setIsEditing(true); e.stopPropagation(); }} className="text-gray-600 hover:text-black">
+            <Pencil size={18} className='hover:size-[25px] duration-200'/>
           </button>
           {canDelete && (
-            <button onClick={(e)=>{e.stopPropagation(); onDelete?.() }} className="text-gray-600 hover:text-black">
-              <Trash2 size={18} />
+            <button onClick={(e) => { e.stopPropagation(); onDelete?.() }} className="text-gray-600 hover:text-black">
+              <Trash2 size={18} className='hover:size-[25px] duration-200'/>
             </button>
           )}
         </div>
@@ -102,7 +105,7 @@ const EventCard: React.FC<EventCardProps> = ({
       {description && <p className="mb-2">{description}</p>}
 
       {customFields.length > 0 && (
-        <div className="custom-fields mt-2">
+        <div className="custom-fields mt-2 mb-2">
           {customFields.map((field, idx) => (
             <p key={idx} className="text-sm">
               <strong>{field.label}:</strong> {field.value}
@@ -110,6 +113,7 @@ const EventCard: React.FC<EventCardProps> = ({
           ))}
         </div>
       )}
+      {status && <div className='bg-gray-600 text-white px-3 py-1 rounded w-fit'>{status}</div>}
     </div>
   );
 };

@@ -42,6 +42,13 @@ function Header() {
           </Link>
         )}
 
+        {user?.role === 'admin' && (
+          <Link href="/approve" className={isActive('/approve')}>
+            Approve
+          </Link>
+        )}
+
+
         {user ? (
           <button
             onClick={logout}
@@ -98,6 +105,17 @@ function Header() {
                 Create
               </Link>
             )}
+
+            {user?.role === 'admin' && (
+              <Link
+                href="/approve"
+                className={`block px-4 py-2 text-sm ${isActive('/approve')} cursor-pointer`}
+                onClick={() => setMenuOpen(false)}
+              >
+                Approve
+              </Link>
+            )}
+
 
             {user ? (
               <button

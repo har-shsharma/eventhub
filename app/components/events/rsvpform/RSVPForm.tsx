@@ -127,7 +127,7 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ eventId, isOwner }) => {
 
   if (isPrivileged || isOwner) {
     return (
-      <div className="bg-white p-4 rounded shadow">
+      <div className="bg-white p-4 rounded shadow backdrop-blur-sm bg-white/40">
         <div className="flex justify-between">
           <h3 className="font-semibold text-lg mb-2">RSVPs Received</h3>
           {rsvps.length > 0 && (
@@ -161,7 +161,7 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ eventId, isOwner }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white rounded shadow">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white rounded shadow backdrop-blur-sm bg-white/40">
       {error && <p className="mb-2 text-red-600">{error}</p>}
 
       <div className="mb-4">

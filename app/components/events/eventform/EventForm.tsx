@@ -138,7 +138,7 @@ const EventForm: React.FC<EventFormProps> = ({ initialData, onSave }) => {
   return (
     <>
       {role !== 'guest' && role !== null && role !== undefined &&
-        <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white rounded-[12px] shadow-lg border border-gray-200 text-gray-800">
+        <form onSubmit={handleSubmit} className="backdrop-blur-sm bg-white/40 max-w-lg mx-auto p-4 bg-white rounded-[12px] shadow-lg border border-gray-200 text-gray-800">
           <div className="mb-4">
             <label className="block font-semibold mb-1" htmlFor="title">Title</label>
             <input

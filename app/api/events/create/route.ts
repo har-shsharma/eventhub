@@ -27,6 +27,7 @@ export async function POST(req: Request) {
       location,
       customFields,
       ownerId: user.userId,
+      status: user.role === 'admin' ? 'approved' : 'pending',
     });
 
     return NextResponse.json({ message: 'Event created', event: newEvent }, { status: 201 });
