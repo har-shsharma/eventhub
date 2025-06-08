@@ -30,6 +30,7 @@ const MyEventsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [statusFilter, setStatusFilter] = useState<string>(''); // '' = all
+  const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
   const limit = 5;
 
@@ -37,8 +38,6 @@ const MyEventsPage = () => {
 
   const fetchEvents = async (page = 1, status = statusFilter) => {
     const token = localStorage.getItem('token');
-    const userRole = localStorage.getItem('role');
-    setRole(userRole);
 
     try {
       setLoadingAnimation(true);
@@ -59,19 +58,25 @@ const MyEventsPage = () => {
     }
   };
 
-
   useEffect(() => {
-    fetchEvents();
+    const storedRole = localStorage.getItem('role');
+    setRole(storedRole);
+
+    if (storedRole === 'guest' || storedRole === 'staff' || !storedRole) {
+      setIsAuthorized(false);
+    } else {
+      setIsAuthorized(true);
+      fetchEvents();
+    }
   }, []);
 
-  if (
-    localStorage.getItem('role') === 'guest' ||
-    localStorage.getItem('role') === 'staff' ||
-    !localStorage.getItem('role')
-  ) {
-    return <p className="text-center p-6">Unauthorized: You do not have access to this page.</p>;
+  if (isAuthorized === null) {
+    return null;
   }
 
+  if (!isAuthorized) {
+    return <p className="text-center p-6">Unauthorized: You do not have access to this page.</p>;
+  }
 
   const handleDelete = async (id: string) => {
     try {
@@ -106,7 +111,6 @@ const MyEventsPage = () => {
       } else if (updatedEvents.length === 0) {
         fetchEvents(currentPage, statusFilter);
       }
-
     } catch (err) {
       console.error('Delete error:', err);
     }
@@ -117,8 +121,7 @@ const MyEventsPage = () => {
       {loadingAnimation && <Loader />}
 
       <div className="max-w-4xl mx-auto p-6">
-
-        <div className='flex justify-between items-center'>
+        <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold mb-6">My Events</h1>
           <div className="relative w-fit mb-6">
             <select
