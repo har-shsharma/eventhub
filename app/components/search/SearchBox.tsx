@@ -24,6 +24,7 @@ function SearchBox({ onSearch }: Props) {
             />
             <button
                 type="submit"
+                style={{ boxShadow: '0px 4px 6px 0px #CDDAFB4D inset' }}
                 className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-black rounded-r-[100px]"
             >
                 Search

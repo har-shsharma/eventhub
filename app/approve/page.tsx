@@ -136,12 +136,14 @@ const AdminEventsPage = () => {
                     <button
                       onClick={() => updateEventStatus(event._id, 'approved')}
                       className="bg-gray-600 text-white px-3 py-1 rounded hover:bg-black"
+                      style={{ boxShadow: '0px 4px 6px 0px #CDDAFB4D inset' }}
                     >
                       Approve
                     </button>
                     <button
                       onClick={() => updateEventStatus(event._id, 'rejected')}
                       className="bg-gray-600 text-white px-3 py-1 rounded hover:bg-black"
+                      style={{ boxShadow: '0px 4px 6px 0px #CDDAFB4D inset' }}
                     >
                       Reject
                     </button>

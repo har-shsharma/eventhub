@@ -224,6 +224,7 @@ const EventForm: React.FC<EventFormProps> = ({ initialData, onSave }) => {
                 type="button"
                 onClick={handleAddCustomField}
                 className="bg-gray-600 text-white px-3 py-1 rounded hover:bg-black"
+                style={{ boxShadow: '0px 4px 6px 0px #CDDAFB4D inset' }}
               >
                 Add
               </button>
@@ -233,6 +234,7 @@ const EventForm: React.FC<EventFormProps> = ({ initialData, onSave }) => {
           <button
             type="submit"
             className="bg-gray-600 text-white py-2 px-4 rounded hover:bg-black"
+            style={{ boxShadow: '0px 4px 6px 0px #CDDAFB4D inset' }}
           >
             Save Event
           </button>
