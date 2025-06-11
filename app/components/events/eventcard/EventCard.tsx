@@ -58,7 +58,7 @@ const EventCard: React.FC<EventCardProps> = ({
       <div className="event-card border rounded-md p-4 shadow-md bg-white relative">
         <button
           onClick={() => setIsEditing(false)}
-          className="absolute top-4 right-6 text-gray-500 hover:text-gray-800"
+          className="z-[20] absolute top-4 right-6 text-gray-500 hover:text-gray-800"
         >
           Cancel
         </button>
